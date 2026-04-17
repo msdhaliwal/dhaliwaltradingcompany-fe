@@ -3,6 +3,16 @@ if (loginForm) {
 	loginForm.addEventListener('submit', HandleLoginAction);
 }
 
+function GetBaseUrl() {
+	if (
+		window.location.hostname === 'localhost' ||
+		window.location.hostname === '127.0.0.1'
+	) {
+		return 'http://localhost:3000';
+	}
+	return 'https://your-production-server.com';
+}
+
 function HandleLoginAction(e) {
 	e.preventDefault();
 

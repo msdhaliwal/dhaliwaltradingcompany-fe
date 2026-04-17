@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - DTC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="./assets/js/common.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .card {
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    .sidebar {
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar (Desktop: fixed, Mobile: slide-in) -->
+    <div id="sidebar" class="sidebar w-64 bg-white border-r border-gray-200 flex-shrink-0 
+                          fixed md:static inset-y-0 left-0 z-50 
+                          transform -translate-x-full md:translate-x-0">
+
+      <!-- Sidebar Header -->
+      <div class="p-6 border-b">
+        <h2 class="text-3xl font-bold text-gray-900">DTC</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="p-4 space-y-1">
+        <a href="./dashboard.html"
+          class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-2xl">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="./products.html" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-2xl">
+          <i class="fas fa-box"></i>
+          <span>Products</span>
+        </a>
+        <a href="./orders.html" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-2xl">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Orders</span>
+        </a>
+        <a href="./parties.html" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-2xl">
+          <i class="fas fa-users"></i>
+          <span>Parties</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-2xl font-medium">
+          <i class="fas fa-chart-bar"></i>
+          <span>Analytics</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Bar -->
+      <div class="bg-white border-b px-4 py-4 md:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <!-- Mobile Menu Button -->
+          <button id="menuBtn" class="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-xl">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h1>
+        </div>
+
+        <!-- Welcome -->
+        <div class="flex items-center gap-3">
+          <div class="hidden sm:block text-right">
+            <p class="text-sm text-gray-500">Welcome back,</p>
+            <p class="font-semibold text-gray-900">Manpreet</p>
+          </div>
+          <div
+            class="w-9 h-9 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-lg shadow">
+            M
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 hidden md:hidden z-40"></div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+    }
+
+    menuBtn.addEventListener('click', openSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking any nav link on mobile
+    document.querySelectorAll('#sidebar a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) closeSidebar();
+      });
+    });
+  </script>
+
+</body>
+
+</html>

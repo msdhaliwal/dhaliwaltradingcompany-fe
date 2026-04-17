@@ -1,151 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dhaliwal Trading Company | Inventory</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Login - DTC</title>
+	<script>
+		window.addEventListener('load', function () {
+			const login_token = localStorage.getItem('login_token');
+			if (login_token) {
+				window.location.href = 'dashboard.html';
+			}
+		});
+	</script>
 	<script src="https://cdn.tailwindcss.com"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-	<link rel="stylesheet" href="./assets/css/inventory.css">
+	<style>
+		body {
+			font-family: 'Segoe UI', system-ui, sans-serif;
+			background-color: #09090b;
+		}
+
+		.login-container {
+			max-width: 420px;
+			margin: 40px auto;
+			padding: 2rem;
+		}
+
+		@media (max-width: 480px) {
+			.login-container {
+				margin: 20px 1rem;
+				padding: 1.5rem;
+			}
+		}
+	</style>
 </head>
 
-<body class="bg-zinc-950 text-zinc-200 min-h-screen font-inter">
-
-	<!-- Navbar -->
-	<nav class="bg-black border-b border-zinc-800 sticky top-0 z-50">
-		<div class="max-w-screen-2xl mx-auto px-4 py-4 flex items-center justify-between">
-			<div class="flex items-center gap-3">
-				<div
-					class="w-9 h-9 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
-					🥤</div>
-				<div>
-					<h1 class="text-2xl font-bold tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">
-						Dhaliwal Trading Company
-					</h1>
-					<p class="text-xs text-zinc-500 -mt-1">Inventory Management</p>
-				</div>
-			</div>
-
-			<button onclick="openAddModal()"
-				class="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-black font-semibold px-6 py-3 rounded-3xl text-sm sm:text-base">
-				<i class="fa-solid fa-plus"></i>
-				<span class="hidden sm:inline">Add Item</span>
-			</button>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+	<div class="login-container bg-white rounded-2xl shadow-xl p-8 md:p-10">
+		<!-- Logo/Header -->
+		<div class="text-center mb-8">
+			<h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
+			<p class="text-gray-600 mt-2">Sign in to continue</p>
 		</div>
-	</nav>
 
-	<div class="max-w-screen-2xl mx-auto px-4 py-6">
-
-		<!-- Header -->
-		<div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+		<!-- Login Form -->
+		<form id="loginForm" class="space-y-6">
+			<!-- Email Field -->
 			<div>
-				<h2 class="text-3xl font-semibold">Stock</h2>
+				<label class="block text-sm font-medium text-gray-700 mb-2">
+					Email Address
+				</label>
+				<input type="email" id="email" required
+					class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+					placeholder="you@example.com" />
 			</div>
 
-			<div class="flex gap-3 w-full sm:w-auto">
-				<div class="relative flex-1">
-					<input id="searchInput" type="text" placeholder="Search..."
-						onkeyup="if(event.key==='Enter') filterInventory()"
-						class="w-full bg-zinc-900 border border-zinc-700 focus:border-orange-500 rounded-3xl py-3 pl-12 text-sm">
-					<i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400"></i>
-				</div>
-				<button onclick="refreshData()" class="px-5 py-3 bg-zinc-900 hover:bg-zinc-800 rounded-3xl">
-					<i class="fa-solid fa-rotate"></i>
-				</button>
+			<!-- Password Field -->
+			<div>
+				<label class="block text-sm font-medium text-gray-700 mb-2">
+					Password
+				</label>
+				<input type="password" id="password" required
+					class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+					placeholder="••••••••" />
 			</div>
-		</div>
-
-		<!-- Stats -->
-		<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8" id="statsContainer">
-			<!-- JS will fill this -->
-		</div>
-		<!-- Mobile Card View (Default for phones) -->
-		<div id="mobileCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:hidden">
-			<!-- Populated by JS -->
-		</div>
-
-		<!-- Desktop Table -->
-		<div class="hidden md:block bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700">
-			<table class="w-full">
-				<thead>
-					<tr class="bg-zinc-950 border-b border-zinc-700">
-						<th class="text-left px-6 py-5 text-xs font-medium text-zinc-400">Item Name</th>
-						<th class="text-left px-6 py-5 text-xs font-medium text-zinc-400">HSN Code</th>
-						<th class="text-left px-6 py-5 text-xs font-medium text-zinc-400">Stock</th>
-						<th class="text-left px-6 py-5 text-xs font-medium text-zinc-400">Latest Price</th>
-						<th class="text-left px-6 py-5 text-xs font-medium text-zinc-400">Last Updated</th>
-					</tr>
-				</thead>
-				<tbody id="inventoryTableBody" class="divide-y divide-zinc-700 text-sm">
-					<!-- JS populated -->
-				</tbody>
-			</table>
-		</div>
-
-		<!-- Empty State -->
-		<div id="emptyState" class="hidden flex flex-col items-center py-20 text-center">
-			<div class="text-7xl mb-6">🥤</div>
-			<h3 class="text-2xl font-medium">No items found</h3>
-			<p class="text-zinc-400 mt-2">Add your first item to get started</p>
-			<button onclick="openAddModal()"
-				class="mt-8 bg-gradient-to-r from-orange-500 to-red-500 text-black px-8 py-4 rounded-3xl font-semibold flex items-center gap-3">
-				<i class="fa-solid fa-plus"></i> Add first item
+			<!-- Login Button -->
+			<button type="submit"
+				class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+				Sign In
 			</button>
-		</div>
+		</form>
 	</div>
-
-	<!-- ADD / EDIT MODAL -->
-	<div id="modalOverlay" onclick="if(event.target===this) closeModal()"
-		class="hidden fixed inset-0 bg-black/80 backdrop-blur z-[1000] flex items-center justify-center p-4">
-		<div onclick="event.stopImmediatePropagation()" class="modal bg-zinc-900 w-full max-w-md rounded-3xl p-6">
-
-			<div class="flex justify-between items-center mb-6">
-				<h3 id="modalTitle" class="text-2xl font-semibold">Add New Item</h3>
-				<button onclick="closeModal()" class="text-3xl text-zinc-400">x</button>
-			</div>
-
-			<form id="drinkForm" onsubmit="handleFormSubmit(event)">
-				<div class="space-y-5">
-					<div>
-						<label class="block text-xs text-zinc-400 mb-1">Item Name</label>
-						<input id="formName" type="text" required placeholder="e.g. Pepsi 500ml"
-							class="w-full bg-zinc-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-orange-500">
-					</div>
-
-					<div>
-						<div>
-							<label class="block text-xs text-zinc-400 mb-1">HSN Code</label>
-							<input id="formHSN" type="text" required placeholder="22021010"
-								class="w-full bg-zinc-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono">
-						</div>
-					</div>
-
-					<div>
-						<label class="block text-xs text-zinc-400 mb-1">Current Quantity (Bottles/Crates)</label>
-						<input id="formQuantity" type="number" min="0" value="50" required
-							class="w-full bg-zinc-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-orange-500">
-					</div>
-
-					<div>
-						<label class="block text-xs text-zinc-400 mb-1">Notes (Optional)</label>
-						<textarea id="formNotes" rows="2" placeholder="Batch no, expiry, etc."
-							class="w-full bg-zinc-800 rounded-3xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
-					</div>
-				</div>
-
-				<div class="flex gap-3 mt-8">
-					<button type="button" onclick="closeModal()"
-						class="flex-1 py-4 rounded-3xl border border-zinc-700 hover:bg-zinc-800 font-medium">Cancel</button>
-					<button type="submit" id="submitBtn"
-						class="flex-1 py-4 rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold">Add
-						Drink</button>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<script src="./assets/js/inventory.js"></script>
+	<script src="./assets/js/login.js"> </script>
 </body>
 
 </html>

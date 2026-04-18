@@ -26,7 +26,6 @@ document.addEventListener('keydown', function (event) {
 let products = [];
 
 let editingId = null;
-
 function RenderProducts() {
 	const tbody = document.getElementById('productTableBody');
 	tbody.innerHTML = '';

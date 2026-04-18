@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - DTC</title>
-  <script src="./assets/js/common.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
   <style>
@@ -104,7 +103,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-gray-500 text-sm">Total Products</p>
-                <p class="text-4xl font-bold text-gray-900 mt-3">248</p>
+                <p id="products_widget" class="text-4xl font-bold text-gray-900 mt-3">0</p>
               </div>
               <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center">
                 <i class="fas fa-box text-3xl text-blue-600"></i>
@@ -185,6 +184,9 @@
 
   <!-- Mobile Overlay -->
   <div id="overlay" class="fixed inset-0 bg-black/50 hidden md:hidden z-40"></div>
+
+  <script src="./assets/js/common.js"></script>
+  <script src="./assets/js/dashboard.js"></script>
 </body>
 
 </html>

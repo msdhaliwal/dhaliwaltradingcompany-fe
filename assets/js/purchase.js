@@ -178,12 +178,16 @@ async function savePurchaseOrder() {
 		const sgst_percent_str = row.children[5].textContent.replace('%', '');
 		const cgst_amount_str = row.children[6].textContent.replace('₹', '');
 		const sgst_amount_str = row.children[7].textContent.replace('₹', '');
+		const unit_amount = Number(row.children[2].textContent.replace('₹', ''));
+		const amount = Number(row.children[3].children[0].value);
+		const quantity = Number(row.children[1].children[0].value);
 
 		items.push({
 			product_id: Number(row.children[0].children[0].value),
-			quantity: Number(row.children[1].children[0].value),
-			unit_price: Number(row.children[2].textContent.replace('₹', '')),
-			total_price: Number(row.children[3].children[0].value),
+			quantity,
+			unit_amount,
+			amount,
+			total_amount: quantity * amount,
 			cgst_percent: parseFloat(cgst_percent_str),
 			sgst_percent: parseFloat(sgst_percent_str),
 			cgst_amount: parseFloat(cgst_amount_str),

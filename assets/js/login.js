@@ -31,7 +31,7 @@ function HandleLoginAction(e) {
 			.then((data) => {
 				const { login_token, employee } = data?.data ?? {};
 				localStorage.setItem('login_token', login_token);
-				localStorage.setItem('employee', employee);
+				localStorage.setItem('employee', JSON.stringify(employee));
 				window.location.href = 'dashboard.html';
 			})
 			.catch((error) => {

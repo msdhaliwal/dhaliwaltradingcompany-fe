@@ -1,4 +1,5 @@
 const productsWidget = document.querySelector('#products_widget');
+const purchaseOrderWidget = document.querySelector('#purhcase_widget')
 
 window.addEventListener('load', () => {
 	fetch(`http://localhost:3000/api/client/v1/dashboard`, {
@@ -12,14 +13,13 @@ window.addEventListener('load', () => {
 		.then((data) => {
 			console.log(data.data);
 			UpdateWidgets(data.data);
-			
 		})
 		.catch((error) => {
 			console.error('Error:', error);
 		});
 });
 
-
-const UpdateWidgets = (data = { products: 0,}) => {
-productsWidget.textContent = data.products;
+const UpdateWidgets = (data = { products: 0 }) => {
+	productsWidget.textContent = data.products;
+	purchaseOrderWidget.textContent = data.purchase_orders
 };
